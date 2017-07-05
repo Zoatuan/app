@@ -25,6 +25,15 @@ public class Todo {
         this.expire = expire;
         this.dbID = dbID;
     }
+    public Todo(String name, String description, boolean favourite,boolean done, String expire) {
+        this.name = name;
+        this.description = description;
+        this.done = done;
+        this.favourite = favourite;
+        this.expire = expire;
+        this.dbID = 0;
+    }
+
 
     public String getName() {
         return name;
