@@ -2,7 +2,6 @@ package com.example.eduard.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -23,7 +22,7 @@ import java.util.List;
 
 public class OverviewItemAdapter extends ArrayAdapter<Todo> {
 
-    Context context;
+    private Context context;
 
     public OverviewItemAdapter(Context context, List<Todo> todoArrayList) {
         super(context, 0, todoArrayList);
@@ -42,28 +41,30 @@ public class OverviewItemAdapter extends ArrayAdapter<Todo> {
 
         //Declare textview and switch-element
         TextView textView = (TextView) convertView.findViewById(R.id.item_textview);
-        Switch item_switch = (Switch) convertView.findViewById(R.id.item_switch);
+        Switch item_switch_done = (Switch) convertView.findViewById(R.id.item_switch_done);
+        Switch item_switch_favourite = (Switch) convertView.findViewById(R.id.item_switch_favourite);
 
-        //Filling textview element with name, expire and favourite from todo
+        //Filling textview element with name, expire and favourite from todoObject
         String germanDate;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyyy");
 
         try {
             Date tempDate = sdf.parse(todo.getExpire());
             germanDate = sdf2.format(tempDate);
+            if((new Date(System.currentTimeMillis())).after(sdf.parse(todo.getExpire()))) {
+                textView.setTextColor(context.getResources().getColor(R.color.colorAccent));
+            }
         } catch (ParseException e) {
             germanDate = todo.getExpire();
         }
 
-        textView.setText(todo.getName() + "\n" + germanDate + "\n");
-        if(todo.isFavourite()) {
-            textView.setText(textView.getText()+"favourite");
-        }
 
-        //Filling switch with done-attribute from todo
-        //TODO: Switch auf Todo.getDone setzen
-        item_switch.setChecked(true);
+        textView.setText(todo.getName() + "\n" + germanDate);
+
+        //Filling switch with done-attribute from todoObject
+        item_switch_done.setChecked(todo.isDone());
+        item_switch_favourite.setChecked(todo.isFavourite());
 
         //Adding onClickListener
         final Intent intentToDetail = new Intent(context, detailitem.class);
@@ -75,6 +76,21 @@ public class OverviewItemAdapter extends ArrayAdapter<Todo> {
             }
         });
 
+        // TODO: Add dbActions for Saving
+        item_switch_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //TODO: Add dbActions for Saving
+        item_switch_favourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return convertView;
     }
 }

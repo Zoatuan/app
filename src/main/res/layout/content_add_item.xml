@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.eduard.myapplication.detailitem"
-    tools:showIn="@layout/activity_detailitem">
+    tools:context="com.example.eduard.myapplication.AddItem"
+    tools:showIn="@layout/activity_add_item">
 
     <TableLayout
         android:layout_width="368dp"
@@ -18,12 +18,12 @@
             android:padding="5dip">
 
             <TextView
-                android:id="@+id/detail_name"
+                android:id="@+id/add_name"
                 android:textSize="20sp"
                 android:text="Name"/>
 
             <EditText
-                android:id="@+id/detail_name_edit"
+                android:id="@+id/add_name_edit"
                 android:text="EditName"
                 />
         </TableRow>
@@ -34,13 +34,13 @@
             android:padding="5dip">
 
             <TextView
-                android:id="@+id/detail_description"
+                android:id="@+id/add_description"
                 android:textSize="20sp"
                 android:layout_width="180dp"
                 android:text="Description"/>
 
             <EditText
-                android:id="@+id/detail_description_edit"
+                android:id="@+id/add_description_edit"
                 android:layout_width="180dp"
                 android:text="EditDescription"
                 />
@@ -51,12 +51,12 @@
             android:layout_height="0dp"
             android:padding="5dip">
             <TextView
-                android:id="@+id/detail_expiredate"
+                android:id="@+id/add_expiredate"
                 android:textSize="20sp"
                 android:text="ExpireDate"/>
 
             <EditText
-                android:id="@+id/detail_expiredate_edit"
+                android:id="@+id/add_expiredate_edit"
                 android:text="EditExpireDate"
                 />
 
@@ -67,28 +67,14 @@
             android:layout_height="0dp"
             android:padding="5dip">
             <TextView
-                android:id="@+id/detail_expiretime"
+                android:id="@+id/add_expiretime"
                 android:textSize="20sp"
                 android:text="ExpireTime"/>
 
             <EditText
-                android:id="@+id/detail_expiretime_edit"
+                android:id="@+id/add_expiretime_edit"
                 android:text="EditExpireTime"
                 />
-
-        </TableRow>
-
-        <TableRow
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="5dip">
-
-            <TextView
-                android:id="@+id/detail_done"
-                android:textSize="20sp"
-                android:text="Done"/>
-
-            <Switch android:id="@+id/detail_done_edit" />
 
         </TableRow>
 
@@ -97,25 +83,22 @@
             android:layout_height="0dp"
             android:padding="5dip">
             <TextView
-                android:id="@+id/detail_favourite"
+                android:id="@+id/add_favourite"
                 android:textSize="20sp"
                 android:text="Favourite"/>
 
-            <TextView
-                android:id="@+id/detail_favourite_edit"
-                android:text=""
-                />
+            <Switch android:id="@+id/add_favourite_edit" />
 
         </TableRow>
     </TableLayout>
 
     <Button
-        android:id="@+id/detail_delete"
+        android:id="@+id/add_adding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete"
+        android:text="Add"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="300dp" />
+        android:layout_marginTop="325dp" />
 
 
 </android.support.constraint.ConstraintLayout>

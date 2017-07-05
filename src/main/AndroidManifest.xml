@@ -32,6 +32,10 @@
         <activity
             android:name=".detailitem"
             android:label="@string/title_activity_detailitem"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddItem"
+            android:label="@string/title_activity_add_item"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/FavDateSort"
+        app:showAsAction="ifRoom"
+        android:title="Fav+Date">
+    </item>
+    <item
+        android:id="@+id/dateFavSort"
+
+        app:showAsAction="ifRoom|withText"
+        android:title="Date+Fav">
+    </item>
+</menu>
