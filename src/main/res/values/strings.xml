@@ -3,4 +3,5 @@
     <string name="title_activity_login_screen">LoginScreen</string>
     <string name="title_activity_overview">Overview</string>
     <string name="title_activity_detailitem">detailitem</string>
+    <string name="title_activity_add_item">AddItem</string>
 </resources>

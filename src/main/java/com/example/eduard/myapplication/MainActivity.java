@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
 /*         dbDataSource.getAllTodos();
          textView.setText(dbDataSource.getAllTodos().get(0).toString());*/
-         Intent intentToLogIn = new Intent(this, LoginScreen.class);
+         Intent intentToLogIn = new Intent(this, Overview.class);
          startActivity(intentToLogIn);
 
 
