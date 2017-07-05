@@ -36,7 +36,7 @@ public class DBDataSource {
                 boolean done = Boolean.parseBoolean(indexArray[3]);
 
                 String expire = indexArray[4];
-                //int dbID = Integer.parseInt(indexArray[5]);
+                int dbID = Integer.parseInt(indexArray[5]);
 
                 resultList.add(new Todo(name, description, favourite, done, expire, 0));
             }

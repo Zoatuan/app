@@ -116,7 +116,7 @@ public class DBConnection extends SQLiteOpenHelper {
         List<String[]> resultList = new ArrayList<>();
         if (cursor.moveToFirst() && !cursor.isLast()) {
             do {
-                String[] array = new String[5];
+                String[] array = new String[6];
                 for (int i = 0; i < array.length; i++) {
                     array[i] = cursor.getString(i);
                     System.out.println(cursor.getString(i));
@@ -178,7 +178,7 @@ public class DBConnection extends SQLiteOpenHelper {
         Todo todo;
         todo = null;
         try {
-            Cursor cursor = mDataBase.rawQuery("SELECT * FROM todo WHERE rowid = ? LIMIT 1", new String[] {Integer.toString(toDoId)});
+            Cursor cursor = mDataBase.rawQuery("SELECT *,rowid FROM todo WHERE rowid = ? LIMIT 1", new String[] {Integer.toString(toDoId)});
             if ( cursor.moveToFirst()) {
                 String name = cursor.getString(cursor.getColumnIndex("Name"));
                 String description= cursor.getString(cursor.getColumnIndex("Description"));

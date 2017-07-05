@@ -1,80 +1,101 @@
 package com.example.eduard.myapplication;
 
-/**
- * Created by Eduard on 26.06.2017.
- */
+import com.google.gson.annotations.SerializedName;
 
-public class DataItem extends Todo {
-    public DataItem() {
-        super();
-    }
-    public DataItem(String name, String description, boolean favourite, boolean done,String expire, int dbID) {
-        super(name, description, favourite, done, expire, dbID);
+import java.io.Serializable;
+
+public class DataItem implements Serializable {
+
+    /**
+     *
+     */
+
+
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("description")
+    private String description;
+
+    @SerializedName("favourite")
+    private boolean favourite;
+
+    @SerializedName("done")
+    private boolean done;
+
+    @SerializedName("expiry")
+    private String expire;
+
+    @SerializedName("id")
+    private int id;
+
+    public DataItem(Todo todo) {
+        this.id = todo.get_dbID();
+        this.name = todo.getName();
+        this.description = todo.getDescription();
+        this.expire = todo.getExpire();
+        this.favourite =todo.isFavourite();
+        this.done=todo.isDone();
     }
 
-    @Override
+    public DataItem(String testname1, String testdesc, boolean fav, boolean done, String s, int i) {
+        this.id = i;
+        this.name = testname1;
+        this.description = testdesc;
+        this.expire = s;
+        this.favourite =fav;
+        this.done=done;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
     public String getName() {
-        return super.getName();
+        return this.name;
     }
 
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-    }
-
-    @Override
     public String getDescription() {
-        return super.getDescription();
+        return this.description;
     }
 
-    @Override
-    public void setDescription(String description) {
-        super.setDescription(description);
-    }
-
-    @Override
-    public boolean isFavourite() {
-        return super.isFavourite();
-    }
-
-    @Override
-    public void setFavourite(boolean favourite) {
-        super.setFavourite(favourite);
-    }
-
-    @Override
-    public void setDone(boolean favourite) {
-        super.setDone(favourite);
-    }
-
-    @Override
-    public boolean isDone() {
-        return super.isDone();
-    }
-
-    @Override
     public String getExpire() {
-        return super.getExpire();
+        return this.expire;
     }
 
-    @Override
-    public void setExpire(String expire) {
-        super.setExpire(expire);
+    public void setId(int id) {
+        this.id = id;
     }
 
-    @Override
-    public void set_dbID(int id) {
-        super.set_dbID(id);
+    public boolean isFavourite(){
+        return this.favourite;
     }
 
-    @Override
-    public int get_dbID() {
-        return super.get_dbID();
+    public boolean isDone(){
+        return this.done;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
+    public int get_dbID(){
+        return this.id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean equals(Object other) {
+        return this.getId() == ((DataItem) other).getId();
+    }
+
+    public DataItem updateFrom(DataItem item) {
+        this.setDescription(item.getDescription());
+        this.setName(item.getName());
+
+        return this;
     }
 
 }
