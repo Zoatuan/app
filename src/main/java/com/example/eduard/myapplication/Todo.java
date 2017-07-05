@@ -1,6 +1,7 @@
 package com.example.eduard.myapplication;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Eduard on 12.05.2017.
@@ -13,8 +14,21 @@ public class Todo {
     private boolean done;
     private String expire;
     private int dbID;
-
+    private String location;
+    private List<Contact> contacts;
     public Todo() {
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void addContacts(Contact contact) {
+        this.contacts.add(contact);
+    }
+
+    public void removeContacts() {
+        this.contacts.clear();
     }
 
     public Todo(String name, String description, boolean favourite,boolean done, String expire, int dbID) {
@@ -34,6 +48,13 @@ public class Todo {
         this.dbID = 0;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public String getName() {
         return name;
@@ -90,6 +111,8 @@ public class Todo {
                 ", favourite=" + favourite +
                 ", done=" + done +
                 ", expire=" + expire +
+                ", Contacts=" + contacts.toString() +
+                ", Location=" + location+
                 '}';
     }
 

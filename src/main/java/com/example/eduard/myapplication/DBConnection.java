@@ -21,13 +21,15 @@ import java.util.List;
  CREATE TABLE todo (
  Name nvarchar(255) NOT NULL,
  Description nvarchar(255),
- Favourite bool NOT NULL,
+ Favourite bool NOT NULL ,
  Done bool NOT NULL,
- Expire time NOT NULL) ;
+ Expire time NOT NULL,
+ Contact nvarchar(1023),
+ Location nvarchar(1023));
  */
 
 public class DBConnection extends SQLiteOpenHelper {
-    private static String DB_NAME = "mobappdev.db";
+    private static String DB_NAME = "mobappdevfinal.db";
     private static String DB_PATH = "";
     private final Context mContext;
     private SQLiteDatabase mDataBase;
