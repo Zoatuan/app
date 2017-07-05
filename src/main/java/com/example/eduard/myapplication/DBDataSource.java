@@ -38,7 +38,7 @@ public class DBDataSource {
                 String expire = indexArray[4];
                 int dbID = Integer.parseInt(indexArray[5]);
 
-                resultList.add(new Todo(name, description, favourite, done, expire, 0));
+                resultList.add(new Todo(name, description, favourite, done, expire, dbID));
             }
         } catch (Exception e) {
             e.printStackTrace();
