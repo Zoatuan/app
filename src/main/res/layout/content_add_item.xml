@@ -90,6 +90,23 @@
             <Switch android:id="@+id/add_favourite_edit" />
 
         </TableRow>
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="5dip">
+            <TextView
+                android:id="@+id/add_contacts"
+                android:textSize="20sp"
+                android:text="Contacts"
+                android:textColor="@color/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/add_contacts_edit"
+                android:text=""
+                android:textColor="@color/colorPrimary"/>
+
+        </TableRow>
+
     </TableLayout>
 
     <Button

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -23,17 +24,20 @@ import java.util.List;
 public class OverviewItemAdapter extends ArrayAdapter<Todo> {
 
     private Context context;
+    private DBDataSource dbDataSource;
+    Todo todo;
 
     public OverviewItemAdapter(Context context, List<Todo> todoArrayList) {
         super(context, 0, todoArrayList);
         this.context = context;
+        dbDataSource = new DBDataSource(context);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        final Todo todo = getItem(position);
+        todo = getItem(position);
 
         if(convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_item, parent, false);
@@ -76,19 +80,19 @@ public class OverviewItemAdapter extends ArrayAdapter<Todo> {
             }
         });
 
-        // TODO: Add dbActions for Saving
-        item_switch_done.setOnClickListener(new View.OnClickListener() {
+        item_switch_done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                todo.setDone(isChecked);
+                dbDataSource.editTodo(todo);
             }
         });
 
-        //TODO: Add dbActions for Saving
-        item_switch_favourite.setOnClickListener(new View.OnClickListener() {
+        item_switch_favourite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                todo.setFavourite(isChecked);
+                dbDataSource.editTodo(todo);
             }
         });
         return convertView;

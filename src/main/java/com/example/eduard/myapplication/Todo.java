@@ -90,7 +90,7 @@ public class Todo {
         this.done = done;
         this.favourite = favourite;
         this.expire = expire;
-        this.dbID = 0;
+        this.dbID = dbID;
         this.contacts = contacts;
         this.location = location;
     }
@@ -131,7 +131,7 @@ public class Todo {
         this.favourite = favourite;
     }
 
-    public void setDone(boolean favourite) {
+    public void setDone(boolean done) {
         this.done = done;
     }
 
