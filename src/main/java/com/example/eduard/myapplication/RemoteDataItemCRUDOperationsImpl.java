@@ -58,8 +58,8 @@ public class RemoteDataItemCRUDOperationsImpl implements IDataItemCRUDOperations
     @Override
     public DataItem createDataItem(DataItem item) {
         try {
-            DataItem created = this.webAPI.createDataItem(item).execute().body();
-            return created;
+            return this.webAPI.createDataItem(item).execute().body();
+
         } catch (Exception e) {
             e.printStackTrace();
         };

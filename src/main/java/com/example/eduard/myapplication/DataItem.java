@@ -3,6 +3,7 @@ package com.example.eduard.myapplication;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class DataItem implements Serializable {
 
@@ -29,6 +30,12 @@ public class DataItem implements Serializable {
     @SerializedName("id")
     private int id;
 
+    @SerializedName("contacts")
+    private List<String> contacs;
+
+    @SerializedName("location")
+    private Todo.Location location;
+
     public DataItem(Todo todo) {
         this.id = todo.get_dbID();
         this.name = todo.getName();
@@ -36,15 +43,47 @@ public class DataItem implements Serializable {
         this.expire = todo.getExpire();
         this.favourite =todo.isFavourite();
         this.done=todo.isDone();
+        this.contacs =todo.getContactsAsStringList();
+        this.location = todo.getLocation();
     }
 
-    public DataItem(String testname1, String testdesc, boolean fav, boolean done, String s, int i) {
+    public DataItem(String testname1, String testdesc, boolean fav, boolean done, String expire, int i, String contacts) {
         this.id = i;
         this.name = testname1;
         this.description = testdesc;
-        this.expire = s;
+        this.expire = expire;
         this.favourite =fav;
         this.done=done;
+
+    }
+
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public void setExpire(String expire) {
+        this.expire = expire;
+    }
+
+    public List<String> getContacs() {
+        return contacs;
+    }
+
+    public void setContacs(List<String> contacs) {
+        this.contacs = contacs;
+    }
+
+    public Todo.Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Todo.Location location) {
+        this.location = location;
     }
 
     public int getId() {

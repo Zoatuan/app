@@ -1,9 +1,12 @@
 package com.example.eduard.myapplication;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,14 +22,43 @@ public class Todo {
     private boolean done;
     private String expire;
     private int dbID;
-    private String location;
+    private Location location;
     private List<Contact> contacts = new ArrayList<>();;
     public Todo() {
     }
 
+/*    public Todo(DataItem item) {
+        this.name = item.getName();
+        this.description = item.getDescription();
+        this.favourite = item.isFavourite();
+        this.done = item.isDone();
+        this.expire = item.getExpire();
+        this.dbID = item.get_dbID();
+        this.location = item.getLocation();
+        this.contacts = item
+    }*/
+
     public List<Contact> getContacts() {
         return contacts;
     }
+
+    public List<String> getContactsAsStringList() {
+        List<Contact> resultList = this.getContacts();
+        List<String> retliste = new ArrayList<String>();
+
+        for (Contact contact:resultList){
+            retliste.add("name: "+ contact.getName() + ",vname: " + contact.getVorname() + ",email:" + contact.getEmail() + ",telenr:" + contact.getTelenr());
+        }
+
+        return retliste;
+    }
+
+
+    public String getLocationAsString(){
+        System.out.println("location: " + new Gson().toJson(this.getLocation()));
+        return new Gson().toJson(this.getLocation());
+    }
+
 
     public void addContacts(Contact contact) {
         this.contacts.add(contact);
@@ -52,12 +84,26 @@ public class Todo {
         this.expire = expire;
         this.dbID = 0;
     }
+    public Todo(String name, String description, boolean favourite,boolean done, String expire, int dbID, List<Contact> contacts, Location location) {
+        this.name = name;
+        this.description = description;
+        this.done = done;
+        this.favourite = favourite;
+        this.expire = expire;
+        this.dbID = 0;
+        this.contacts = contacts;
+        this.location = location;
+    }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public String getLocationAsJSONString(){
+        return new Gson().toJson(this.location);
+    }
+
+    public void setLocation(Location location) {
         this.location = location;
     }
 
@@ -123,7 +169,6 @@ public class Todo {
                 item.put("email",contact.getEmail());
                 item.put("telenr",contact.getTelenr());
                 array.put(item);
-                //sammlung+=todo.getName()+ " " +todo.getDescription()+ " " + " " +todo.isDone()+ " "+ todo.get_dbID()+"\n";
             }
             json.put("kontakte", array);
 
@@ -146,4 +191,69 @@ public class Todo {
                 '}';
     }
 
+    public static class LatLng implements Serializable {
+
+        private double lat;
+        private double lng;
+
+        public LatLng() {
+
+        }
+
+        public LatLng(long lat,long lng) {
+            this.lat = lat;
+            this.lng = lng;
+        }
+
+        public double getLat() {
+            return lat;
+        }
+
+        public void setLat(double lat) {
+            this.lat = lat;
+        }
+
+        public double getLng() {
+            return lng;
+        }
+
+        public void setLng(double lng) {
+            this.lng = lng;
+        }
+
+    }
+
+    public static class Location implements Serializable {
+
+        private String name;
+
+        private LatLng latlng;
+
+        public Location() {
+
+        }
+
+        public Location(String name,LatLng latlng) {
+            this.name = name;
+            this.latlng = latlng;
+        }
+
+        public LatLng getLatlng() {
+            return latlng;
+        }
+
+        public void setLatlng(LatLng latlng) {
+            this.latlng = latlng;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+
+    }
 }

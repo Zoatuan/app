@@ -1,5 +1,7 @@
 package com.example.eduard.myapplication;
 
+import java.util.List;
+
 /**
  * Created by Eduard on 05.07.2017.
  */
@@ -9,6 +11,7 @@ public class Contact {
     private String vorname;
     private String email;
     private String telenr;
+    private int id;
 
     public Contact(String name, String vorname, String email, String telenr){
         this.name = name;
@@ -16,6 +19,18 @@ public class Contact {
         this.email= email;
         this.telenr=telenr;
 
+    }
+
+    public Contact(){
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
