@@ -7,6 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Pair;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,7 +34,7 @@ import java.util.List;
  Favourite bool NOT NULL ,
  Done bool NOT NULL,
  Expire time NOT NULL,
- Contact nvarchar(1023),
+ Contacts nvarchar(1023),
  Location nvarchar(1023));
  */
 
@@ -112,29 +122,60 @@ public class DBConnection extends SQLiteOpenHelper {
         return mDataBase != null;
     }
 
-    public List<String[]> getAllToDos() throws Exception {
+    public List<Todo> getAllToDos() throws Exception {
 
-        Cursor cursor = mDataBase.rawQuery("SELECT *,rowid FROM todo", null);
-        List<String[]> resultList = new ArrayList<>();
-        if (cursor.moveToFirst() && !cursor.isLast()) {
-            do {
-                String[] array = new String[6];
-                for (int i = 0; i < array.length; i++) {
-                    array[i] = cursor.getString(i);
-                    System.out.println(cursor.getString(i));
-                }
-                resultList.add(array);
-            } while (cursor.moveToNext());
+        Cursor cursor = mDataBase.rawQuery("SELECT *,rowid FROM todo",null );
+        List<Todo> resultList = new ArrayList<>();
+        while (cursor.moveToNext()){
+            String name = cursor.getString(cursor.getColumnIndex("Name"));
+            String description= cursor.getString(cursor.getColumnIndex("Description"));
+            boolean favourite = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex("Favourite")));
+            boolean done = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex("Done")));
+            String expire = cursor.getString(cursor.getColumnIndex("Expire"));
+
+            String contactsstring = cursor.getString(cursor.getColumnIndex("Contacts"));
+
+            JSONObject jsnobject = new JSONObject(contactsstring);
+
+            JSONArray jsonArray = jsnobject.getJSONArray("kontakte");
+
+            List<Contact> contacts = new ArrayList<>();;
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject explrObject = jsonArray.getJSONObject(i);
+                Contact contact = new Contact();
+
+                contact.setName(explrObject.get("name").toString());
+                contact.setVorname(explrObject.get("vorname").toString());
+                contact.setEmail(explrObject.get("email").toString());
+                contact.setTelenr(explrObject.get("telenr").toString());
+
+                //ObjectMapper m = new ObjectMapper();
+                //Contact myClass = m.readValue(explrObject.toString(), Contact.class);
+                contacts.add(contact);
+            }
+
+
+
+            int toDoId = cursor.getInt(cursor.getColumnIndex("rowid"));
+
+            String location= cursor.getString(cursor.getColumnIndex("Location"));
+            Gson gson = new GsonBuilder().create();
+
+            Todo.Location p = gson.fromJson(location, Todo.Location.class);
+
+            Todo todo = new Todo(name,description,favourite,done,expire,toDoId,contacts,p);
+            resultList.add(todo);
 
         }
+
+
         return resultList;
     }
 
     public boolean newToDo(Todo newToDo) {
         boolean ret = true;
         try {
-            String test = "INSERT INTO todo VALUES ('" + newToDo.getName() + "','" + newToDo.getDescription() + "','" + newToDo.isFavourite() + "','" + newToDo.isDone() + "','" + newToDo.getExpire() + "')";
-            mDataBase.execSQL("INSERT INTO todo VALUES ('" + newToDo.getName() + "','" + newToDo.getDescription() + "','" + newToDo.isFavourite() + "','" + newToDo.isDone() + "','" + newToDo.getExpire() + "')");
+            mDataBase.execSQL("INSERT INTO todo VALUES ('" + newToDo.getName() + "','" + newToDo.getDescription() + "','" + newToDo.isFavourite() + "','" + newToDo.isDone() + "','" + newToDo.getExpire()+ "','" + newToDo.getContactsAsJSONString()+ "','" + newToDo.getLocationAsJSONString() + "')");
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -146,7 +187,7 @@ public class DBConnection extends SQLiteOpenHelper {
         boolean ret = true;
         try {
             mDataBase.execSQL("DELETE FROM todo WHERE rowid = " + editTodo.get_dbID());
-            mDataBase.execSQL("INSERT INTO todo VALUES (" + editTodo.getName() + "," + editTodo.getDescription() + "," + editTodo.isFavourite() + "," + editTodo.isDone() + "," + editTodo.getExpire() + ")");
+            mDataBase.execSQL("INSERT INTO todo VALUES (" + editTodo.getName() + "," + editTodo.getDescription() + "," + editTodo.isFavourite() + "," + editTodo.isDone() + "," + editTodo.getExpire() + "','" + editTodo.getContactsAsJSONString()+ "','" + editTodo.getLocationAsJSONString() + "')");
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -187,12 +228,42 @@ public class DBConnection extends SQLiteOpenHelper {
                 boolean favourite = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex("Favourite")));
                 boolean done = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex("Done")));
                 String expire = cursor.getString(cursor.getColumnIndex("Expire"));
-                todo = new Todo(name,description,favourite,done,expire,toDoId);
+
+                String contactsstring = cursor.getString(cursor.getColumnIndex("Contacts"));
+
+                JSONObject jsnobject = new JSONObject(contactsstring);
+
+                JSONArray jsonArray = jsnobject.getJSONArray("kontakte");
+
+                List<Contact> contacts = new ArrayList<>();;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject explrObject = jsonArray.getJSONObject(i);
+                    Contact contact = new Contact();
+
+                    contact.setName(explrObject.get("name").toString());
+                    contact.setVorname(explrObject.get("vorname").toString());
+                    contact.setEmail(explrObject.get("email").toString());
+                    contact.setTelenr(explrObject.get("telenr").toString());
+                    
+                    //ObjectMapper m = new ObjectMapper();
+                    //Contact myClass = m.readValue(explrObject.toString(), Contact.class);
+                    contacts.add(contact);
+                }
+
+
+                String location= cursor.getString(cursor.getColumnIndex("Location"));
+                Gson gson = new GsonBuilder().create();
+                Todo.Location p = gson.fromJson(location, Todo.Location.class);
+
+                todo = new Todo(name,description,favourite,done,expire,toDoId,contacts,p);
+                return todo;
             }else{
                 System.out.println("ToDo mit der ID nicht vorhanden");
                 todo = new Todo("null","null",false,false,"0000-00-00 00:00:00",0);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return todo;

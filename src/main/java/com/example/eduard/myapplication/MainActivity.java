@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,40 +24,67 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Todo todo = new Todo("Testname1","Testdesc",false,new Date(System.currentTimeMillis()));
 
         dbDataSource = new DBDataSource(this);
-        //dbDataSource.deleteToDoByID(1);
-        //dbDataSource.deleteAllToDos();
 
-        Todo newToDo = new Todo("NeuesTodo","NeueDesc3",false,false,"2017-06-17 20:40:40");
-
-        Contact contact1 = new Contact("Testnachname","Testvorname","bla@test.de","12345678");
-        Contact contact2 = new Contact("Testnachname2","Testvorname2","bla2@test.de","123456789");
+        Todo newToDo = new Todo("Caffee","Etwas Chillen",false,true,"1355288400000");
+        Contact contact1 = new Contact("Bruhl","Eduard","test@web.web","123456");
         newToDo.addContacts(contact1);
-        newToDo.addContacts(contact2);
-
         dbDataSource.newTodo(newToDo);
 
-        System.out.println(newToDo.getContactsAsJSONString());
-/*
         TextView textView = (TextView) findViewById(R.id.FirstTextField);
-       String sammlung = "";
-        List<Todo> resultList = new ArrayList<>();
-        resultList = dbDataSource.getAllTodos();
-
+        String sammlung = "";
+        List<Todo> resultList = dbDataSource.getAllTodos();
         for (Todo todo:resultList){
-            sammlung+=todo.getName()+ " " +todo.getDescription()+ " " + " " +todo.isDone()+ " "+ todo.get_dbID()+"\n";
+            sammlung+=todo.getName()+ " " +todo.getDescription()+ " " + " " +todo.isDone()+ " "+ todo.get_dbID()+ todo.getContactsAsJSONString() +"\n";
         }
+        Todo todo = dbDataSource.getToDoByID(1);
+        sammlung+="\n Todo by ID:"+ todo.getName()+ " " +todo.getDescription()+ " " + " " +todo.isDone()+ " "+ todo.get_dbID()+ todo.getContactsAsJSONString() +"\n";
         textView.setText(sammlung);
-        // Todo todo = dbDataSource.getToDoByID(1);
-        // sammlung += "per ID: "+todo.getName()+ " " +todo.getDescription()+ " " + todo.get_dbID()+"\n";
 
-        //int size = dbDataSource.getAllTodos().size();
+
+    }
 /*
-        IDataItemCRUDOperations webtest;
+    // Todo todo = new Todo("Testname1","Testdesc",false,new Date(System.currentTimeMillis()));
 
-        webtest = new RemoteDataItemCRUDOperationsImpl();
+    dbDataSource = new DBDataSource(this);
+    //dbDataSource.deleteToDoByID(1);
+    //dbDataSource.deleteAllToDos();
+
+    //dbDataSource.newTodo(newToDo);
+        // Contact contact2 = new Contact("Seelmann","Eduard","test@web.web","123456");
+
+
+        //Contact contact2 = new Contact("Testnachname2","Testvorname2","bla2@test.de","123456789");
+    //System.out.println(newToDo.getContactsAsJSONString());
+// {"name":"asdasd","description":"asdasd","contacts":["asdasd","testest"],"location":{"latlng":{"lat":12.0,"lng":12.0},"name":"test"}}
+
+
+        Todo todo = dbDataSource.getToDoByID(1);
+        String sammlung = "per ID: "+todo.getName()+ " " +todo.getDescription()+ " " + todo.get_dbID()+ todo.getContactsAsJSONString() + todo.getLocation() +"\n";
+        System.out.println(sammlung);
+        //int size = dbDataSource.getAllTodos().size();
+
+/*       // newToDo.addContacts(contact2);
+
+        newToDo.setLocation(new Todo.Location("PartyBus",new Todo.LatLng(12,12)));
+
+        IDataItemCRUDOperations webtest = new RemoteDataItemCRUDOperationsImpl();
+
+
+       // DataItem test = new DataItem(newToDo);
+        // webtest.createDataItem(test);
+
+        DataItem bla = webtest.readDataItem(7);
+
+        System.out.println(bla.getName());
+
+        List<String> testliste = new ArrayList<String>();
+
+        testliste.add("asdasd");
+        String bla = new Gson().toJson(testliste);
+
+        System.out.println(bla);
 
         String string_date = "12-December-2012";
 
@@ -77,26 +107,17 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(sammlung);
 
         //webtest.createDataItem(tes t);
-
         //webtest.deleteDataItem(2);
-
         //DataItem itest = webtest.readDataItem(1);
-
-         // System.out.println("lolololololol:" + itest.getName());
-
-
+         // System.out.println("lolololololol:" + itest.getName()
         //textView.setText(sammlung);
-
         //int size2 = dbDataSource.getAllTodos().size();
         //textView.setText("size1: "+size+", size2: "+size2+", CurrentTime: "+newToDo.getExpire());
-
-
-/*         dbDataSource.getAllTodos();
+       dbDataSource.getAllTodos();
          textView.setText(dbDataSource.getAllTodos().get(0).toString());
          Intent intentToLogIn = new Intent(this, LoginScreen.class);
-         startActivity(intentToLogIn);*/
-
-
-    }
+         startActivity(intentToLogIn);
+         */
 
 }
+

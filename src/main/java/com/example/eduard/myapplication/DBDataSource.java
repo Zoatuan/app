@@ -26,20 +26,7 @@ public class DBDataSource {
     public List<Todo> getAllTodos(){
         List<Todo> resultList = new ArrayList<>();
         try {
-            List<String[]> allTodosAsString = dbHelper.getAllToDos();
-
-            for(String[] indexArray : allTodosAsString) {
-                //String name, String description, boolean favourite, Date expire
-                String name = indexArray[0];
-                String description = indexArray[1];
-                boolean favourite = Boolean.parseBoolean(indexArray[2]);
-                boolean done = Boolean.parseBoolean(indexArray[3]);
-
-                String expire = indexArray[4];
-                int dbID = Integer.parseInt(indexArray[5]);
-
-                resultList.add(new Todo(name, description, favourite, done, expire, dbID));
-            }
+            resultList = dbHelper.getAllToDos();
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
