@@ -1,5 +1,10 @@
 package com.example.eduard.myapplication;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +20,7 @@ public class Todo {
     private String expire;
     private int dbID;
     private String location;
-    private List<Contact> contacts;
+    private List<Contact> contacts = new ArrayList<>();;
     public Todo() {
     }
 
@@ -101,6 +106,31 @@ public class Todo {
     }
     public int get_dbID() {
         return dbID;
+    }
+
+    public String getContactsAsJSONString(){
+        String message;
+        JSONObject json = new JSONObject();
+
+        try {
+
+            List<Contact> resultList = this.getContacts();
+            JSONArray array = new JSONArray();
+            for (Contact contact:resultList){
+                JSONObject item = new JSONObject();
+                item.put("name",contact.getName());
+                item.put("vorname",contact.getVorname());
+                item.put("email",contact.getEmail());
+                item.put("telenr",contact.getTelenr());
+                array.put(item);
+                //sammlung+=todo.getName()+ " " +todo.getDescription()+ " " + " " +todo.isDone()+ " "+ todo.get_dbID()+"\n";
+            }
+            json.put("kontakte", array);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json.toString();
     }
 
     @Override
