@@ -37,10 +37,10 @@ public class SetDate implements View.OnFocusChangeListener, DatePickerDialog.OnD
             editTextText = "" + dayOfMonth;
         }
 
-        if(month < 10) {
-            editTextText += ".0" + month;
+        if(((int)month+1) < 10) {
+            editTextText += ".0" + ((int)month+1);
         } else {
-            editTextText += "." + month;
+            editTextText += "." + ((int)month+1);
         }
         editTextText += "." + year;
         this.editText.setText(editTextText);

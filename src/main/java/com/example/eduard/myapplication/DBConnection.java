@@ -187,7 +187,7 @@ public class DBConnection extends SQLiteOpenHelper {
         boolean ret = true;
         try {
             mDataBase.execSQL("DELETE FROM todo WHERE rowid = " + editTodo.get_dbID());
-            mDataBase.execSQL("INSERT INTO todo VALUES (" + editTodo.getName() + "," + editTodo.getDescription() + "," + editTodo.isFavourite() + "," + editTodo.isDone() + "," + editTodo.getExpire() + "','" + editTodo.getContactsAsJSONString()+ "','" + editTodo.getLocationAsJSONString() + "')");
+            newToDo(editTodo);
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
@@ -198,7 +198,7 @@ public class DBConnection extends SQLiteOpenHelper {
     public boolean deleteToDoByID(int toDoId) {
         boolean ret = true;
         try {
-            mDataBase.execSQL("DELETE FROM todo WHERE rowid = " + toDoId + "LIMIT 1");
+            mDataBase.execSQL("DELETE FROM todo WHERE rowid = " + toDoId );
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;

@@ -160,4 +160,9 @@ public class Overview extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }
