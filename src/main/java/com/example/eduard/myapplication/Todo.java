@@ -90,7 +90,7 @@ public class Todo {
         this.done = done;
         this.favourite = favourite;
         this.expire = expire;
-        this.dbID = 0;
+        this.dbID = dbID;
         this.contacts = contacts;
         this.location = location;
     }

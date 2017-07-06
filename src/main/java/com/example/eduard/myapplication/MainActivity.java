@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         Todo newToDo = new Todo("Caffee","Etwas Chillen",false,true,"1355288400000");
         Contact contact1 = new Contact("Bruhl","Eduard","test@web.web","123456");
         newToDo.addContacts(contact1);
-        dbDataSource.newTodo(newToDo);
+        //dbDataSource.newTodo(newToDo);
 
         TextView textView = (TextView) findViewById(R.id.FirstTextField);
         String sammlung = "";
@@ -42,11 +42,19 @@ public class MainActivity extends AppCompatActivity {
         sammlung+="\n Todo by ID:"+ todo.getName()+ " " +todo.getDescription()+ " " + " " +todo.isDone()+ " "+ todo.get_dbID()+ todo.getContactsAsJSONString() +"\n";
         textView.setText(sammlung);
 
+        User user = new User("s@bht.de","000000");
+        System.out.println("user: " + new Gson().toJson(user));
+
+        IUserOperations webtestuser = new RemoteUserCRUDOperations();
+        boolean logtrue = webtestuser.checkLogin(user);
+
+        System.out.println("logtrue: " + logtrue);
+
 
     }
 /*
     // Todo todo = new Todo("Testname1","Testdesc",false,new Date(System.currentTimeMillis()));
-
+{"email":"s@bht.de","pwd":"000000"}
     dbDataSource = new DBDataSource(this);
     //dbDataSource.deleteToDoByID(1);
     //dbDataSource.deleteAllToDos();
