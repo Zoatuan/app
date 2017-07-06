@@ -10,6 +10,14 @@ public class Contact {
     private String email;
     private String telenr;
 
+    public Contact(String name, String vorname, String email, String telenr){
+        this.name = name;
+        this.vorname = vorname;
+        this.email= email;
+        this.telenr=telenr;
+
+    }
+
     public String getName() {
         return name;
     }
