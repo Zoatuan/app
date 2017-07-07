@@ -20,13 +20,17 @@ public class DBDataSource {
     private DBConnection dbHelper;
 
     public static boolean webIsReachable = true;
+    private static boolean checkedOnce = false;
 
     IDataItemCRUDOperations webapi = new RemoteDataItemCRUDOperationsImpl();
 
     public DBDataSource(Context context) {
-
         dbHelper = new DBConnection(context);
-        this.isWebIsReachable();
+        if(!checkedOnce){
+            this.isWebIsReachable();
+        }else{
+            checkedOnce = true;
+        }
     }
 
     public void isWebIsReachable(){

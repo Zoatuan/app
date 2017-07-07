@@ -25,8 +25,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intentToLogIn = new Intent(this, LoginScreen.class);
-        startActivity(intentToLogIn);
+        dbDataSource = new DBDataSource(this);
+
+        if(DBDataSource.webIsReachable){
+            Intent intentToLogIn = new Intent(this, LoginScreen.class);
+            startActivity(intentToLogIn);
+
+        }else{
+            Intent overwiev = new Intent(this, Overview.class);
+            startActivity(overwiev);
+    }
+
 
     }
 /*
