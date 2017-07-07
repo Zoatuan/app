@@ -25,8 +25,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbDataSource = new DBDataSource(this);
+        Intent intentToLogIn = new Intent(this, LoginScreen.class);
+        startActivity(intentToLogIn);
 
+    }
+/*
         Todo newToDo = new Todo("Caffee","Etwas Chillen",false,true,"1355288400000");
         Contact contact1 = new Contact("Bruhl","Eduard","test@web.web","123456");
         newToDo.addContacts(contact1);
@@ -41,18 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Todo todo = dbDataSource.getToDoByID(1);
         sammlung+="\n Todo by ID:"+ todo.getName()+ " " +todo.getDescription()+ " " + " " +todo.isDone()+ " "+ todo.get_dbID()+ todo.getContactsAsJSONString() +"\n";
         textView.setText(sammlung);
-
-        User user = new User("s@bht.de","000000");
-        System.out.println("user: " + new Gson().toJson(user));
-
-        IUserOperations webtestuser = new RemoteUserCRUDOperations();
-        boolean logtrue = webtestuser.checkLogin(user);
-
-        System.out.println("logtrue: " + logtrue);
-
-
-    }
-/*
+ *//*
     // Todo todo = new Todo("Testname1","Testdesc",false,new Date(System.currentTimeMillis()));
 {"email":"s@bht.de","pwd":"000000"}
     dbDataSource = new DBDataSource(this);
@@ -125,6 +117,33 @@ public class MainActivity extends AppCompatActivity {
          textView.setText(dbDataSource.getAllTodos().get(0).toString());
          Intent intentToLogIn = new Intent(this, LoginScreen.class);
          startActivity(intentToLogIn);
+
+        TextView textView = (TextView) findViewById(R.id.FirstTextField);
+
+         dbDataSource = new DBDataSource(this);
+        //dbDataSource.deleteAllToDos();
+        Todo newtodo = new Todo("Offtodo","testdesc",true,false,"123456789");
+        newtodo.addContacts(new Contact("Eduard","Bruhl",null,null));
+        newtodo.setLocation(new Todo.Location("Timbktu",new Todo.LatLng(12,12)));
+
+        dbDataSource.newTodo(newtodo);
+
+        String sammlung = "";
+        List<Todo> resultList = dbDataSource.getAllTodos();
+        for (Todo todo:resultList){
+            sammlung+=todo.getName()+ " " +todo.getDescription()+ " " + " " +todo.isDone()+ " "+ todo.get_dbID()+ todo.getContactsAsJSONString() +"\n";
+        }
+
+        textView.setText(sammlung);
+        User user = new User("s@bht.de","000000");
+        System.out.println("user: " + new Gson().toJson(user));
+
+        IUserOperations webtestuser = new RemoteUserCRUDOperations();
+        boolean logtrue = webtestuser.checkLogin(user);
+
+        System.out.println("logtrue: " + logtrue);
+
+
          */
 
 }

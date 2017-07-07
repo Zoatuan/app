@@ -68,13 +68,13 @@ public class RemoteDataItemCRUDOperationsImpl implements IDataItemCRUDOperations
 
 
     @Override
-    public List<DataItem> readAllDataItems() {
+    public List<DataItem> readAllDataItems() throws IOException{
         try {
             return this.webAPI.readAllDataItems().execute().body();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException(e);
         }
-        return null;
+
     }
 
     @Override

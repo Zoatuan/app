@@ -142,19 +142,24 @@ public class DBConnection extends SQLiteOpenHelper {
             List<Contact> contacts = new ArrayList<>();;
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject explrObject = jsonArray.getJSONObject(i);
-                Contact contact = new Contact();
+                Contact contact = new Contact("","","","");
 
-                contact.setName(explrObject.get("name").toString());
-                contact.setVorname(explrObject.get("vorname").toString());
-                contact.setEmail(explrObject.get("email").toString());
-                contact.setTelenr(explrObject.get("telenr").toString());
+                try{
+                    contact.setName(explrObject.get("name").toString());
+                    contact.setVorname(explrObject.get("vorname").toString());
+                    contact.setEmail(explrObject.get("email").toString());
+                    contact.setTelenr(explrObject.get("telenr").toString());
 
-                //ObjectMapper m = new ObjectMapper();
-                //Contact myClass = m.readValue(explrObject.toString(), Contact.class);
-                contacts.add(contact);
+                    //ObjectMapper m = new ObjectMapper();
+                    //Contact myClass = m.readValue(explrObject.toString(), Contact.class);
+
+                }catch(JSONException e){
+                    e.printStackTrace();
+                }finally {
+                    contacts.add(contact);
+                }
+
             }
-
-
 
             int toDoId = cursor.getInt(cursor.getColumnIndex("rowid"));
 
