@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -26,10 +27,12 @@ public class OverviewItemAdapter extends ArrayAdapter<Todo> {
     private Context context;
     private DBDataSource dbDataSource;
     Todo todo;
+    List<Todo> todoArrayList;
 
     public OverviewItemAdapter(Context context, List<Todo> todoArrayList) {
         super(context, 0, todoArrayList);
         this.context = context;
+        this.todoArrayList = todoArrayList;
         dbDataSource = new DBDataSource(context);
     }
 
@@ -75,7 +78,15 @@ public class OverviewItemAdapter extends ArrayAdapter<Todo> {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intentToDetail.putExtra("todo_id", todo.get_dbID());
+                Todo finalTodo = new Todo();
+                for (Todo work : todoArrayList) {
+                    if(work.getName().equals(((TextView) v).getText().toString().split("\n")[0])) {
+                        finalTodo = work;
+                    }
+                }
+                if(finalTodo != null && !"".equals(finalTodo.getName())) {
+                    intentToDetail.putExtra("todo_id", finalTodo.get_dbID());
+                }
                 context.startActivity(intentToDetail);
             }
         });
