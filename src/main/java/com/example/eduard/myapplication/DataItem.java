@@ -2,7 +2,11 @@ package com.example.eduard.myapplication;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataItem implements Serializable {
@@ -31,7 +35,7 @@ public class DataItem implements Serializable {
     private int id;
 
     @SerializedName("contacts")
-    private List<String> contacs;
+    private List<String> contacts;
 
     @SerializedName("location")
     private Todo.Location location;
@@ -43,7 +47,7 @@ public class DataItem implements Serializable {
         this.expire = todo.getExpire();
         this.favourite =todo.isFavourite();
         this.done=todo.isDone();
-        this.contacs =todo.getContactsAsStringList();
+        this.contacts =todo.getContactsAsStringList();
         this.location = todo.getLocation();
     }
 
@@ -70,12 +74,45 @@ public class DataItem implements Serializable {
         this.expire = expire;
     }
 
-    public List<String> getContacs() {
-        return contacs;
+    public List<String> getContacts() {
+        return contacts;
     }
 
-    public void setContacs(List<String> contacs) {
-        this.contacs = contacs;
+    public List<Contact> getContacsAsContacts() {
+
+        List<Contact> retliste = new ArrayList<Contact>();
+        try {
+            for (String contactstring : contacts) {
+
+                JSONObject jsnobject = new JSONObject(contactstring);
+
+                JSONArray jsonArray = jsnobject.getJSONArray("kontakte");
+
+                List<Contact> contacts = new ArrayList<>();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject explrObject = jsonArray.getJSONObject(i);
+                    Contact contact = new Contact();
+
+                    contact.setName(explrObject.get("name").toString());
+                    contact.setVorname(explrObject.get("vorname").toString());
+                    contact.setEmail(explrObject.get("email").toString());
+                    contact.setTelenr(explrObject.get("telenr").toString());
+
+                    //ObjectMapper m = new ObjectMapper();
+                    //Contact myClass = m.readValue(explrObject.toString(), Contact.class);
+                    retliste.add(contact);
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return retliste;
+    }
+
+    public void setContacts(List<String> contacts) {
+        this.contacts = contacts;
     }
 
     public Todo.Location getLocation() {

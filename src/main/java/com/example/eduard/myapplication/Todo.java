@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -93,6 +92,18 @@ public class Todo {
         this.dbID = dbID;
         this.contacts = contacts;
         this.location = location;
+    }
+
+    public Todo(DataItem item) {
+        System.out.println("ToDo by Item:" + item.getName());
+        this.name = item.getName();
+        this.description = item.getDescription();
+        this.done = item.isDone();
+        this.favourite = item.isFavourite();
+        this.expire = item.getExpire();
+        this.dbID = item.get_dbID();
+        this.contacts = item.getContacsAsContacts();
+        this.location = item.getLocation();
     }
 
     public Location getLocation() {

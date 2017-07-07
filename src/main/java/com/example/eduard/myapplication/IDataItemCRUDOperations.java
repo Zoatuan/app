@@ -1,5 +1,6 @@
 package com.example.eduard.myapplication;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IDataItemCRUDOperations {
@@ -10,7 +11,7 @@ public interface IDataItemCRUDOperations {
 
 	public DataItem createDataItem(DataItem item);
 
-	public List<DataItem> readAllDataItems();
+	public List<DataItem> readAllDataItems() throws IOException;
 
 	public DataItem readDataItem(int dateItemId);
 
