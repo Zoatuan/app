@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.eduard.myapplication.Overview"
-    tools:showIn="@layout/activity_overview">
+    tools:context="com.example.eduard.myapplication.Mapview"
+    tools:showIn="@layout/activity_mapview">
 
     <LinearLayout
         android:id="@+id/overview_Linear"
@@ -14,14 +14,14 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/overview_button"
+            android:id="@+id/overview_button_map"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".50"
             android:text="Overview"/>
 
         <Button
-            android:id="@+id/mapview_button"
+            android:id="@+id/mapview_button_map"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
@@ -29,12 +29,14 @@
 
     </LinearLayout>
 
-
-
-    <ListView
-        android:layout_width="wrap_content"
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/overview_listview"
-        android:layout_marginTop="8dp"
+        tools:context="com.example.eduard.myapplication.Location"
         app:layout_constraintTop_toBottomOf="@+id/overview_Linear"/>
+
 </android.support.constraint.ConstraintLayout>

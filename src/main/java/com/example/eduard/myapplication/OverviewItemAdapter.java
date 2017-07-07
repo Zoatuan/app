@@ -90,20 +90,24 @@ public class OverviewItemAdapter extends ArrayAdapter<Todo> {
                 context.startActivity(intentToDetail);
             }
         });
-
+        item_switch_done.setCameraDistance(todo.get_dbID());
         item_switch_done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    todo.setDone(isChecked);
-                    dbDataSource.editTodo(todo);
+                    int db = (int)((Switch) buttonView).getCameraDistance();
+                    Todo finalTodo = dbDataSource.getToDoByID(db);
+                    finalTodo.setDone(isChecked);
+                    dbDataSource.editTodo(finalTodo);
             }
         });
-
+        item_switch_done.setCameraDistance(todo.get_dbID());
         item_switch_favourite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    todo.setFavourite(isChecked);
-                    dbDataSource.editTodo(todo);
+                    int db = (int)((Switch) buttonView).getCameraDistance();
+                    Todo finalTodo = dbDataSource.getToDoByID(db);
+                    finalTodo.setFavourite(isChecked);
+                    dbDataSource.editTodo(finalTodo);
             }
         });
         return convertView;

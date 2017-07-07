@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intentToLogIn);
 
         }else{
-            Intent overwiev = new Intent(this, Overview.class);
-            startActivity(overwiev);
+            Intent overview = new Intent(this, Overview.class);
+            startActivity(overview);
     }
 
 

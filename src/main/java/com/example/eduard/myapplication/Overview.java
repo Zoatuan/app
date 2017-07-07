@@ -2,9 +2,11 @@ package com.example.eduard.myapplication;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TabHost;
 
@@ -26,11 +29,27 @@ public class Overview extends AppCompatActivity {
 
     DBDataSource dbDataSource;
     List<Todo> todoList;
+    public static boolean showAlert = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbDataSource = new DBDataSource(this);
+
+        if(!DBDataSource.webIsReachable && showAlert) {
+            new AlertDialog.Builder(Overview.this)
+                    .setTitle("Warning")
+                    .setMessage("Web-Application is not reachable!")
+                    .setNegativeButton("okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+            showAlert = false;
+        }
+
         setContentView(R.layout.activity_overview);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -40,6 +59,24 @@ public class Overview extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(intentToAdd);
+            }
+        });
+
+        Button overview = (Button) findViewById(R.id.overview_button);
+        final Intent toOverview = new Intent(this, Overview.class);
+        overview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(toOverview);
+            }
+        });
+
+        Button mapview = (Button) findViewById(R.id.mapview_button);
+        final Intent intentMapview = new Intent(this, Mapview.class);
+        mapview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intentMapview);
             }
         });
         doTheRest(true);

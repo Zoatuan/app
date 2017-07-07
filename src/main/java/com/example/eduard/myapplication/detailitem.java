@@ -88,7 +88,7 @@ public class detailitem extends AppCompatActivity implements OnMapReadyCallback 
         editDescription.setText(todo.getDescription());
         editDate.setText(todoDate.toString());
         editTime.setText(todoTime.toString());
-        editDone.setChecked(todo.isDone() );
+        editDone.setChecked(todo.isDone());
         if(todo.isFavourite()) {
             showFavourite.setText("Favourite");
         } else {
