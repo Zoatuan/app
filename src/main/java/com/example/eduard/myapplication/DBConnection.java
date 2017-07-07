@@ -191,8 +191,11 @@ public class DBConnection extends SQLiteOpenHelper {
     public boolean editToDo(Todo editTodo) {
         boolean ret = true;
         try {
-            mDataBase.execSQL("DELETE FROM todo WHERE rowid = " + editTodo.get_dbID());
-            newToDo(editTodo);
+           // mDataBase.execSQL("DELETE FROM todo WHERE rowid = " + editTodo.get_dbID());
+            mDataBase.execSQL("UPDATE todo SET Name = ?, Description = ?, Favourite = ?, Done = ?, Expire = ?, Contacts = ?, Location = ? WHERE rowid = ?",
+                    new String[] {editTodo.getName(),editTodo.getDescription(),Boolean.toString(editTodo.isFavourite()),Boolean.toString(editTodo.isDone()),editTodo.getExpire(),editTodo.getContactsAsJSONString(),editTodo.getLocationAsJSONString(),Integer.toString(editTodo.get_dbID())});
+
+            //newToDo(editTodo);
         } catch (SQLException e) {
             e.printStackTrace();
             ret = false;
