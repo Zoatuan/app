@@ -14,7 +14,8 @@ public class CheckWidgetContent {
      */
     static public boolean checkEmail(String email) {
         boolean returnBoolean = false;
-        returnBoolean = email.matches("[a-zA-Z0-9]+[_a-zA-Z0-9\\.-]*[a-z0-9]+@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]+)");
+        //returnBoolean = email.matches("[a-zA-Z0-9]+[_a-zA-Z0-9\\.-]*[a-z0-9]+@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]+)");
+        returnBoolean = email.matches("[_a-zA-Z0-9\\.-]*[a-z0-9]+@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]+)");
         return returnBoolean;
     }
 

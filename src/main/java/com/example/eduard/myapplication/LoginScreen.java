@@ -3,6 +3,7 @@ package com.example.eduard.myapplication;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import static android.R.attr.button;
 
@@ -47,7 +50,7 @@ public class LoginScreen extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(errorMessage.getText().toString().startsWith("email")) {
+                if(errorMessage.getText().toString().startsWith("email")|| errorMessage.getText().toString().startsWith("Data")) {
                     errorMessage.setText("");
                 }
                 if(email.getText().length() > 0) {
@@ -76,7 +79,7 @@ public class LoginScreen extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
             public void afterTextChanged(Editable s) {
-                if(errorMessage.getText().toString().startsWith("password")) {
+                if(errorMessage.getText().toString().startsWith("password") || errorMessage.getText().toString().startsWith("Data")) {
                     errorMessage.setText("");
                 }
                 if(password.getText().length() > 0) {
@@ -96,8 +99,36 @@ public class LoginScreen extends AppCompatActivity {
             public void onClick(View v) {
                 if(errorMessage.getText().equals("")){
                     if(CheckWidgetContent.checkEmail(email.getText().toString()) && CheckWidgetContent.checkPassword(password.getText().toString())) {
-                        Toast.makeText(LoginScreen.this, "Login successful " + email.getText() + "; " + password.getText(), Toast.LENGTH_LONG).show();
-                        startActivity(intentToOverview);
+
+                        // User user = new User("s@bht.de","000000");
+
+                        progressBar.setVisibility(View.VISIBLE);
+
+                        new CountDownTimer(2000, 1000) {
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                                //this will be done every 1000 milliseconds ( 1 seconds )
+                                int progress = (int) ((1000 - millisUntilFinished) / 1000);
+                                progressBar.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                //the progressBar will be invisible after 60 000 miliseconds ( 1 minute)
+                                progressBar.setVisibility(View.INVISIBLE);
+                                IUserOperations webtestuser = new RemoteUserCRUDOperations();
+                                User user = new User(email.getText().toString(),password.getText().toString());
+                                boolean logtrue = webtestuser.checkLogin(user);
+                                if(logtrue){
+                                    //Toast.makeText(LoginScreen.this, "Login successful " + email.getText() + "; " + password.getText(), Toast.LENGTH_LONG).show();
+                                    startActivity(intentToOverview);
+                                }else{
+                                    errorMessage.setText("Data not correct!");
+                                }
+                            }
+
+                        }.start();
+
                     } else {
                         errorMessage.setText("password is not well formed!");
                     }
