@@ -1,5 +1,6 @@
 package com.example.eduard.myapplication;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -211,9 +212,14 @@ public class Todo {
 
         }
 
-        public LatLng(long lat,long lng) {
+        public LatLng(double lat,double lng) {
             this.lat = lat;
             this.lng = lng;
+        }
+
+        public LatLng(com.google.android.gms.maps.model.LatLng latlng) {
+            this.lat = latlng.latitude;
+            this.lng = latlng.longitude;
         }
 
         public double getLat() {

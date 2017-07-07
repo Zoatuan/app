@@ -4,4 +4,5 @@
     <string name="title_activity_overview">Overview</string>
     <string name="title_activity_detailitem">detailitem</string>
     <string name="title_activity_add_item">AddItem</string>
+    <string name="title_activity_location">Map</string>
 </resources>

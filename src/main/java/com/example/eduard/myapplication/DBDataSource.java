@@ -28,7 +28,6 @@ public class DBDataSource {
         dbHelper = new DBConnection(context);
         if(!checkedOnce){
             this.isWebIsReachable();
-        }else{
             checkedOnce = true;
         }
     }

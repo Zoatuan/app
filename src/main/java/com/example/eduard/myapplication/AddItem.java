@@ -7,7 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.net.Uri;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -21,19 +22,32 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AddItem extends AppCompatActivity {
+public class AddItem extends AppCompatActivity implements OnMapReadyCallback {
 
     Context context;
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     Todo todo;
     List<Contact> displayedContacts;
     DBDataSource dbDataSource;
+    private GoogleMap mMap;
+    private LatLng location;
+    private LatLng oldLocation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,11 +105,20 @@ public class AddItem extends AppCompatActivity {
                         newTodo.addContacts(contact);
                     }
                 }
+                EditText locationName = (EditText) findViewById(R.id.add_locationName_edit);
+                if(locationName != null && locationName.getText() != null && !locationName.getText().toString().equals("") && location != null)
+                newTodo.setLocation(new Todo.Location(locationName.getText().toString(),new Todo.LatLng(location)));
                 dbDataSource.newTodo(newTodo);
                 startActivity(intentToOverview);
             }
         });
         showContacts();
+
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
     }
 
 
@@ -231,5 +254,60 @@ public class AddItem extends AppCompatActivity {
         }
         cursor.close();
         return contactList;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        LatLng braunschweig = new LatLng(52.26594, 10.52673);
+        //mMap.addMarker(new MarkerOptions().position(braunschweig).title("Marker in Sydney"));
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(braunschweig)
+                .zoom(15)
+                .build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                location = latLng;
+                new AlertDialog.Builder(AddItem.this)
+                        .setTitle("Sure?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mMap.clear();
+                                oldLocation = location;
+                                mMap.addMarker(new MarkerOptions().position(location));
+
+                                EditText locationName = (EditText) findViewById(R.id.add_locationName_edit);
+                                Geocoder geocoder = new Geocoder(context);
+                                List<Address> adressList = new ArrayList<Address>();
+                                try {
+                                    adressList = geocoder.getFromLocation(location.latitude, location.longitude, 1);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                locationName.setText(adressList.get(0).getThoroughfare() + " " + adressList.get(0).getSubThoroughfare());
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mMap.clear();
+                                if(oldLocation != null) {
+                                    mMap.addMarker(new MarkerOptions().position(oldLocation));
+                                    location = oldLocation;
+                                }
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+
+            }
+        });
     }
 }
