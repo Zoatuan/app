@@ -83,16 +83,16 @@ public class OverviewItemAdapter extends ArrayAdapter<Todo> {
         item_switch_done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                todo.setDone(isChecked);
-                dbDataSource.editTodo(todo);
+                    todo.setDone(isChecked);
+                    dbDataSource.editTodo(todo);
             }
         });
 
         item_switch_favourite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                todo.setFavourite(isChecked);
-                dbDataSource.editTodo(todo);
+                    todo.setFavourite(isChecked);
+                    dbDataSource.editTodo(todo);
             }
         });
         return convertView;

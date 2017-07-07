@@ -1,16 +1,19 @@
 package com.example.eduard.myapplication;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TabHost;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,7 +31,6 @@ public class Overview extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbDataSource = new DBDataSource(this);
-
         setContentView(R.layout.activity_overview);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,14 +52,14 @@ public class Overview extends AppCompatActivity {
                 int result = 0;
 
                 if(o1.isDone() && !o2.isDone()) {
-                    result = 1;
-                } else if(!o1.isDone() && o2.isDone()) {
                     result = -1;
+                } else if(!o1.isDone() && o2.isDone()) {
+                    result = 1;
                 } else {
                     if(o1.isFavourite() && !o2.isFavourite()) {
-                        result = 1;
-                    } else if(!o1.isFavourite() && o2.isFavourite()){
                         result = -1;
+                    } else if(!o1.isFavourite() && o2.isFavourite()){
+                        result = 1;
                     } else {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         Date o1Date = new Date();
@@ -87,9 +89,9 @@ public class Overview extends AppCompatActivity {
                 int result = 0;
 
                 if(o1.isDone() && !o2.isDone()) {
-                    result = 1;
-                } else if(!o1.isDone() && o2.isDone()) {
                     result = -1;
+                } else if(!o1.isDone() && o2.isDone()) {
+                    result = 1;
                 } else {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     Date o1Date = new Date();
@@ -104,9 +106,9 @@ public class Overview extends AppCompatActivity {
                         result = -1;
                     } else {
                         if(o1.isFavourite() && !o2.isFavourite()) {
-                            result = 1;
-                        } else if(!o1.isFavourite() && o2.isFavourite()) {
                             result = -1;
+                        } else if(!o1.isFavourite() && o2.isFavourite()) {
+                            result = 1;
                         }
                     }
                 }
