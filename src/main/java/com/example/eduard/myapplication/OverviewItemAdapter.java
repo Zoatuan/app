@@ -91,25 +91,47 @@ public class OverviewItemAdapter extends ArrayAdapter<Todo> {
             }
         });
         item_switch_done.setCameraDistance(todo.get_dbID());
-        item_switch_done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        item_switch_done.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    int db = (int)((Switch) buttonView).getCameraDistance();
-                    Todo finalTodo = dbDataSource.getToDoByID(db);
-                    finalTodo.setDone(isChecked);
-                    dbDataSource.editTodo(finalTodo);
+            public void onClick(View v) {
+                Switch thisSwitch = (Switch) v;
+                int dbID = (int) thisSwitch.getCameraDistance();
+                Todo finalTodo = dbDataSource.getToDoByID(dbID);
+                finalTodo.setDone(thisSwitch.isChecked());
+                dbDataSource.editTodo(finalTodo);
             }
         });
-        item_switch_done.setCameraDistance(todo.get_dbID());
-        item_switch_favourite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        item_switch_favourite.setCameraDistance(todo.get_dbID());
+        item_switch_favourite.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    int db = (int)((Switch) buttonView).getCameraDistance();
-                    Todo finalTodo = dbDataSource.getToDoByID(db);
-                    finalTodo.setFavourite(isChecked);
-                    dbDataSource.editTodo(finalTodo);
+            public void onClick(View v) {
+                Switch thisSwitch = (Switch) v;
+                int dbID = (int) thisSwitch.getCameraDistance();
+                Todo finalTodo = dbDataSource.getToDoByID(dbID);
+                finalTodo.setFavourite(thisSwitch.isChecked());
+                dbDataSource.editTodo(finalTodo);
             }
         });
+//        item_switch_done.setCameraDistance(todo.get_dbID());
+//        item_switch_done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    int db = (int)((Switch) buttonView).getCameraDistance();
+//                    Todo finalTodo = dbDataSource.getToDoByID(db);
+//                    finalTodo.setDone(isChecked);
+//                    dbDataSource.editTodo(finalTodo);
+//            }
+//        });
+//        item_switch_done.setCameraDistance(todo.get_dbID());
+//        item_switch_favourite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    int db = (int)((Switch) buttonView).getCameraDistance();
+//                    Todo finalTodo = dbDataSource.getToDoByID(db);
+//                    finalTodo.setFavourite(isChecked);
+//                    dbDataSource.editTodo(finalTodo);
+//            }
+//        });
         return convertView;
     }
 }
