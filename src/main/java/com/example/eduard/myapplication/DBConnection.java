@@ -22,7 +22,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -181,7 +183,7 @@ public class DBConnection extends SQLiteOpenHelper {
         boolean ret = true;
         try {
             mDataBase.execSQL("INSERT INTO todo VALUES ('" + newToDo.getName() + "','" + newToDo.getDescription() + "','" + newToDo.isFavourite() + "','" + newToDo.isDone() + "','" + newToDo.getExpire()+ "','" + newToDo.getContactsAsJSONString()+ "','" + newToDo.getLocationAsJSONString() + "')");
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             ret = false;
         }

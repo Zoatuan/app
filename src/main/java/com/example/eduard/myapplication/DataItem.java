@@ -6,7 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DataItem implements Serializable {
@@ -44,7 +47,19 @@ public class DataItem implements Serializable {
         this.id = todo.get_dbID();
         this.name = todo.getName();
         this.description = todo.getDescription();
-        this.expire = todo.getExpire();
+
+        String string_date = todo.getExpire();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d = null;
+        try {
+            d = sdf.parse(string_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long milliseconds = d.getTime();
+        String longstring = String.valueOf(milliseconds);
+
+        this.expire = longstring;
         this.favourite =todo.isFavourite();
         this.done=todo.isDone();
         this.contacts =todo.getContactsAsStringList();
@@ -136,7 +151,12 @@ public class DataItem implements Serializable {
     }
 
     public String getExpire() {
-        return this.expire;
+
+        long val = Long.getLong(this.expire);
+        Date date=new Date(val);
+        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateText = df2.format(date);
+        return dateText;
     }
 
     public void setId(int id) {
