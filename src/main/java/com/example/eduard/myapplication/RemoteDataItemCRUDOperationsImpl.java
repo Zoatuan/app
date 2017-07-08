@@ -48,7 +48,7 @@ public class RemoteDataItemCRUDOperationsImpl implements IDataItemCRUDOperations
         StrictMode.setThreadPolicy(policy);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.3.2:8080/")
+                .baseUrl("http://10.0.2.2:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         this.webAPI = retrofit.create(IDataItemCRUDWebAPI.class);

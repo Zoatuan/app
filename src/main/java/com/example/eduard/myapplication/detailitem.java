@@ -248,7 +248,7 @@ public class detailitem extends AppCompatActivity implements OnMapReadyCallback 
                                     final int adressContact = which;
                                     boolean hasTel = false;
                                     boolean hasEmail = false;
-                                    String[] array;
+                                    final String[] array;
                                     if(null != checkContact.getTelenr() && !"".equals(checkContact.getTelenr())) {
                                         hasTel = true;
                                     }
@@ -276,7 +276,7 @@ public class detailitem extends AppCompatActivity implements OnMapReadyCallback 
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     Contact finalContact = displayedContacts.get(adressContact);
-                                                    if(which == 0) {
+                                                    if(array[which] == "Email") {
                                                         //EMAIL
                                                         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
                                                         sendIntent.setData(Uri.parse("sms:"));

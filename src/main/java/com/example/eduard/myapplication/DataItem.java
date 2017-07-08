@@ -152,7 +152,7 @@ public class DataItem implements Serializable {
 
     public String getExpire() {
 
-        long val = Long.getLong(this.expire);
+        long val = Long.valueOf(this.expire);
         Date date=new Date(val);
         SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateText = df2.format(date);

@@ -268,7 +268,6 @@ public class DBConnection extends SQLiteOpenHelper {
                 todo = new Todo(name,description,favourite,done,expire,toDoId,contacts,p);
                 return todo;
             }else{
-                System.out.println("ToDo mit der ID nicht vorhanden");
                 todo = new Todo("null","null",false,false,"0000-00-00 00:00:00",0);
             }
         } catch (SQLException e) {

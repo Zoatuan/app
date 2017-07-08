@@ -55,7 +55,6 @@ public class DBDataSource {
             e.printStackTrace();
             webIsReachable = false;
         }
-        System.out.println("webIsReachable: " + webIsReachable);
     }
 
     public List<Todo> getAllTodos(){

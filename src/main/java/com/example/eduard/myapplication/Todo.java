@@ -55,7 +55,6 @@ public class Todo {
 
 
     public String getLocationAsString(){
-        System.out.println("location: " + new Gson().toJson(this.getLocation()));
         return new Gson().toJson(this.getLocation());
     }
 
@@ -96,7 +95,6 @@ public class Todo {
     }
 
     public Todo(DataItem item) {
-        System.out.println("ToDo by Item:" + item.getName());
         this.name = item.getName();
         this.description = item.getDescription();
         this.done = item.isDone();
