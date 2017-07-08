@@ -106,7 +106,11 @@ public class DBDataSource {
     }
 
     public void editTodo(Todo todo) {
+
         dbHelper.editToDo(todo);
+        if(webIsReachable){
+            webapi.updateDataItem(todo.get_dbID(),new DataItem(todo));
+        }
     }
 
 }

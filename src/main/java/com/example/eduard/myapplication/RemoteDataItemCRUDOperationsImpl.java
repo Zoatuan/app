@@ -90,7 +90,12 @@ public class RemoteDataItemCRUDOperationsImpl implements IDataItemCRUDOperations
 
     @Override
     public DataItem updateDataItem(int id, DataItem item) {
+        try {
+            return this.webAPI.updateDataItem(id,item).execute().body();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        };
         return null;
     }
 
