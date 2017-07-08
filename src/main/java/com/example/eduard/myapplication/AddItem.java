@@ -249,7 +249,12 @@ public class AddItem extends AppCompatActivity implements OnMapReadyCallback {
                     } while(eCur.moveToNext());
                     eCur.close();
                 }
-                contactList.add(new Contact(name.split(" ")[1], name.split(" ")[0], phone, email));
+                try{
+                    contactList.add(new Contact(name.split(" ")[1], name.split(" ")[0], email, phone));
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
             } while (cursor.moveToNext());
         }
         cursor.close();
